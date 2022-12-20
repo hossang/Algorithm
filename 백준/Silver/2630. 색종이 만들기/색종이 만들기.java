@@ -9,32 +9,6 @@ public class Main {
     static int completeblack = 0;
     public static void recur(int hlt, int hrt, int vlt, int vrt) { //h - 가로(행) , v - 세로(열)
         //언제까지?
-        if (hrt - hlt == 1 && vrt - vlt == 1) {
-            int w;
-            int b;
-            w = b = 0;
-            for (int i = hlt; i <= hrt; i++) {
-                for (int j = vlt; j <= vrt; j++) {
-                    if (arr[i][j] == 0) {
-                        w++;
-                    } else {
-                        b++;
-                    }
-                }
-            }
-            if (w == 0 || b == 0) { //한 영역이 모두 같으면
-                if (w == 0) {
-                    completeblack++;
-                } else {
-                    completewhite++;
-                }
-            } else { //다르면
-                completewhite += w;
-                completeblack += b;
-            }
-            return;
-        }
-
         //★한 영역이 같은지 어캐 판단? -> 흰색과 검은색의 갯수?
         int w;
         int b;
@@ -73,12 +47,7 @@ public class Main {
                 arr[i][j] = Integer.parseInt(st.nextToken());
             }
         }
-        /*for (int i = 0; i < n; i++) {//print
-            for (int j = 0; j < n; j++) {
-                System.out.print(arr[i][j]);
-            }
-            System.out.println();
-        }*/
+
         recur(0, n - 1, 0, n - 1);
 
         System.out.println(completewhite);
