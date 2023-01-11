@@ -45,7 +45,7 @@ public class Main {
             }
         }
         backTracking(0);
-        System.out.println(sb);
+
     }
 
     private static void backTracking(int idx) {
@@ -57,6 +57,8 @@ public class Main {
                     }
                     sb.append("\n");
                 }
+                System.out.println(sb);
+                System.exit(0);
                 flag = true;
             }
             return;
