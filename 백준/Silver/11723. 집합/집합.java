@@ -31,9 +31,10 @@ public class Main {
                     set |= (1 << (param - 1));
                     break;
 
-                case "check":
+                case "check": //★
                     param = Integer.parseInt(st.nextToken());
                     if ((set & (1 << (param - 1))) != 0) {
+                    //if ((set & (1 << (param - 1))) == 1) {
                         sb.append(1).append("\n");
                     } else {
                         sb.append(0).append("\n");
@@ -51,11 +52,13 @@ public class Main {
                     set ^= (1 << (param-1));
                     break;
 
-                case "all":
-                    set |= (~0);
+                case "all": //★
+                    for (int j = 0; j < 20; j++) {
+                        set |= (1 << j);
+                    }
                     break;
 
-                case "empty":
+                case "empty": //★
                     set &= 0;
                     break;
 
@@ -64,6 +67,5 @@ public class Main {
             }
         }
         System.out.println(sb);
-
     }
 }
