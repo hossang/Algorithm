@@ -72,10 +72,9 @@ public class Main {
     private static void chage(int b, int c) {
         int idx = firstLeaf + b - 1;
         tree[idx] = c;
-        idx /= 2;
         while (idx >= 1) {
-            tree[idx] = (tree[2 * idx] % R * tree[2 * idx + 1] % R) % R;
             idx /= 2;
+            tree[idx] = (tree[2 * idx] % R * tree[2 * idx + 1] % R) % R;
         }
     }
 }
