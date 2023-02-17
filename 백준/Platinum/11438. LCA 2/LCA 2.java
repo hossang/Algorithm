@@ -1,4 +1,3 @@
-
 import java.io.*;
 import java.util.*;
 
@@ -99,3 +98,25 @@ public class Main {
         return sparsetable[0][a];
     }
 }
+/*20
+1 2
+1 3
+2 4
+3 7
+6 2
+3 8
+4 9
+2 5
+5 11
+7 13
+10 4
+11 15
+12 5
+14 7
+15 16
+16 17
+17 18
+18 19
+19 20
+1
+13 20*/
