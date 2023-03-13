@@ -12,7 +12,7 @@ public class Main {
         st = new StringTokenizer(br.readLine(), " ");
         int N = Integer.parseInt(st.nextToken());
         int T = Integer.parseInt(st.nextToken());
-        long[] prefixSum = new long[100_002];
+        int[] prefixSum = new int[100_002];
         for (int i = 0; i < N; i++) {
             int K = Integer.parseInt(br.readLine());
             for (int j = 0; j < K; j++) {
@@ -28,11 +28,11 @@ public class Main {
             prefixSum[i + 1] += prefixSum[i];
         }
 
-        long max = Long.MIN_VALUE;
+        int max = Integer.MIN_VALUE;
         int start = 0;
         int end = 0;
         for (int i = 0; i < prefixSum.length - T; i++) {
-            long sum = 0L;
+            int sum = 0;
             for (int j = i; j < T + i; j++) {
                 sum += prefixSum[j];
             }
