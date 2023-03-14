@@ -39,7 +39,7 @@ public class Main {
                 }
             }
         }
-        
+
         PriorityQueue<Integer> pq = new PriorityQueue<>();
         pq.offer(cnt);
         directx = new int[]{-1, 1, 0, 0}; //좌우상하
@@ -51,28 +51,9 @@ public class Main {
             dc = new ArrayDeque<>();
 
             int i = 0;
-            for (int j = 0; j < X; j++) {
-                if (cheese[i][j] == 0 && !visited[i][j]) {
-                    cnt = BFS(cnt, i, j);
-                }
-            }
-            i = Y - 1;
-            for (int j = 0; j < X; j++) {
-                if (cheese[i][j] == 0 && !visited[i][j]) {
-                    cnt = BFS(cnt, i, j);
-                }
-            }
             int j = 0;
-            for (i = 0; i < Y; i++) {
-                if (cheese[i][j] == 0 && !visited[i][j]) {
-                    cnt = BFS(cnt, i, j);
-                }
-            }
-            j = X - 1;
-            for (i = 0; i < Y; i++) {
-                if (cheese[i][j] == 0 && !visited[i][j]) {
-                    cnt = BFS(cnt, i, j);
-                }
+            if (cheese[i][j] == 0 && !visited[i][j]) {
+                cnt = BFS(cnt, i, j);
             }
 
             pq.offer(cnt);
