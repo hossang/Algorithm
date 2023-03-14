@@ -49,12 +49,10 @@ public class Main {
             dc = new ArrayDeque<>();
             bfs(0, 0);
 
-            for (int i = 0; i < Y; i++) {
-                for (int j = 0; j < X; j++) {
-                    if (cheese[i][j] == 1 && visited[i][j]) {
-                        visited[i][j] = false;
-                    }
-                }
+            for (int i = 0; i < dc.size(); i++) {
+                YX now = dc.pollFirst();
+                visited[now.y][now.x] = false;
+                dc.add(now);
             }
 
             while (!dc.isEmpty()) {
