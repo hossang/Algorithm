@@ -3,7 +3,7 @@ import java.io.IOException
 import java.io.InputStreamReader
 import java.util.*
 
-fun main(args: Array<String>) = with(BufferedReader(InputStreamReader(System.`in`))) {
+fun main() = with(BufferedReader(InputStreamReader(System.`in`))) {
     var sb = StringBuilder()
     var st = StringTokenizer(readLine(), " ")
     val N = st.nextToken().toInt()
