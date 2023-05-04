@@ -27,8 +27,11 @@ public class Main {
             int x = Integer.parseInt(st.nextToken());
             childs[x] = childs[x - 1] + 1;
         }
-        Arrays.sort(childs);
-        System.out.println(N - childs[N]);
+        int max = 0;
+        for(int i = 1; i <= N ; i++) {
+            max = Math.max(max, childs[i]);
+        }
+        System.out.println(N - max);
 
     }
 }
