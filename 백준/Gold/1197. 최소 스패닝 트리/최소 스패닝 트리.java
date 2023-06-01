@@ -1,67 +1,69 @@
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
-import java.io.*;
+
+class VE {
+    int v1;
+    int v2;
+    int e;
+
+    public VE(int v1, int v2, int e) {
+        this.v1 = v1;
+        this.v2 = v2;
+        this.e = e;
+    }
+}
 
 public class Main {
-    public static int[] parent;
-
-    public static int find(int x) {
-        if (x == parent[x]) {
-            return x;
-        } else {
-            return parent[x] = find(parent[x]);
-        }
-    }
-    public static void union(int x, int y) {
-        x = find(x);
-        y = find(y);
-        if (x < y) {
-            parent[y] = x;
-        } else {
-            parent[x] = y;
-        }
-    }
-    public static class Edge implements Comparable<Edge>{
-        int v1;
-        int v2;
-        int w;
-
-        public Edge(int v1, int v2, int w) {
-            this.v1 = v1;
-            this.v2 = v2;
-            this.w = w;
-        }
-
-        @Override
-        public int compareTo(Edge e) {
-            return this.w - e.w;
-        }
-
-    }
-    public static void main(String[] arg) throws IOException {
+    private static StringBuilder sb;
+    private static int[] parents;
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine(), " ");
-        int v = Integer.parseInt(st.nextToken());
-        int e = Integer.parseInt(st.nextToken());
-        parent = new int[v + 1];
-        for (int i = 1; i <= v; i++) {
-            parent[i] = i;
+        sb = new StringBuilder();
+        StringTokenizer st;
+
+        st = new StringTokenizer(br.readLine(), " ");
+        int V = Integer.parseInt(st.nextToken());
+        int E = Integer.parseInt(st.nextToken());
+        parents = new int[V + 1];
+        for (int i = 0; i <= V; i++) {
+            parents[i] = i;
         }
-        PriorityQueue<Edge> pq = new PriorityQueue<>();
-        for (int i = 0; i < e; i++) {
+        PriorityQueue<VE> pq = new PriorityQueue<>((o1, o2) -> o1.e - o2.e);
+        for (int i = 0; i < E; i++) {
             st = new StringTokenizer(br.readLine(), " ");
-            int a = Integer.parseInt(st.nextToken());
-            int b = Integer.parseInt(st.nextToken());
-            int c = Integer.parseInt(st.nextToken());
-            pq.offer(new Edge(a, b, c));
+            int A = Integer.parseInt(st.nextToken());
+            int B = Integer.parseInt(st.nextToken());
+            int C = Integer.parseInt(st.nextToken());
+            pq.offer(new VE(A, B, C));
         }
-        int sum = 0;
+        int result = 0;
         while (!pq.isEmpty()) {
-            Edge now = pq.poll();
-            if (find(now.v1) != find(now.v2)) {
-                union(now.v1, now.v2);
-                sum += now.w;
+            VE now = pq.poll();
+            if (find(now.v1) == find(now.v2)) {
+                continue;
             }
+            union(now.v1, now.v2);
+            result += now.e;
         }
-        System.out.println(sum);
+        System.out.println(result);
+    }
+
+    private static void union(int v1, int v2) {
+        v1 = find(v1);
+        v2 = find(v2);
+        if (v1 < v2) {
+            parents[v2] = v1;
+            return;
+        }
+        parents[v1] = v2;
+    }
+
+    private static int find(int x) {
+        if (parents[x] == x) {
+            return x;
+        }
+        return parents[x] = find(parents[x]);
     }
 }
