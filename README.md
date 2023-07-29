@@ -14,9 +14,7 @@
 프로필](http://mazassumnida.wtf/api/generate_badge?boj=dlghckd)](https://solved.ac/dlghckd)
 <center>
 ## 💥Goals
-
-   #### Heading level 4
-
+## Goals
 - ~~백준 플레티넘 달성하기~~
 - 코틀린 연습하기
 - 코드포스 민트 달성하기
