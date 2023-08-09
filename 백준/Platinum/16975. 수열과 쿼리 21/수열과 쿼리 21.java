@@ -35,27 +35,20 @@ public class Main {
                 sum(1, 1, firstLeaf, i, j, k);
             } else {
                 int x = Integer.parseInt(st.nextToken());
-                sb.append(search(1,1,firstLeaf,x)).append("\n");
+                sb.append(search(x+firstLeaf - 1)).append("\n");
             }
         }
         System.out.print(sb);
 
     }
 
-    private static long search(int node, int l, int r, int x) {
-        long sum = 0L;
-        while (node < firstLeaf) {
-            int mid = l + (r - l) / 2;
-            sum += tree[node];
-            if (mid < x) {
-                node = node * 2 + 1;
-                l = mid + 1;
-            } else {
-                node = node * 2;
-                r = mid;
-            }
+   private static long search(int x) {
+        long res = tree[x];
+        while (x > 1) {
+            x >>= 1;
+            res += tree[x];
         }
-        return sum + tree[node];
+        return res;
     }
 
 
