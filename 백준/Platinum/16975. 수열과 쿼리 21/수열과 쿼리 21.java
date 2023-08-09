@@ -2,47 +2,45 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    private static int firstLeaf;
+    //백준
+    private static StringBuilder sb;
+
     private static long[] tree;
+    private static int firstLeaf;
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
+        sb = new StringBuilder();
         StringTokenizer st;
 
         int N = Integer.parseInt(br.readLine());
-        st = new StringTokenizer(br.readLine(), " ");
-        int[] A = new int[N];
-        for (int i = 0; i < N; i++) {
-            A[i] = Integer.parseInt(st.nextToken());
-        }
-        //tree
         firstLeaf = 1;
         while (firstLeaf < N) {
             firstLeaf <<= 1;
         }
         tree = new long[firstLeaf * 2];
+        st = new StringTokenizer(br.readLine(), " ");
         for (int i = 0; i < N; i++) {
-            tree[firstLeaf + i] = A[i];
+            tree[firstLeaf + i] = Integer.parseInt(st.nextToken());
         }
+
         int M = Integer.parseInt(br.readLine());
         for (int h = 0; h < M; h++) {
             st = new StringTokenizer(br.readLine(), " ");
-            int num = Integer.parseInt(st.nextToken());
-            if (num == 1) {
+            int Q = Integer.parseInt(st.nextToken());
+            if (Q == 1) {
                 int i = Integer.parseInt(st.nextToken());
                 int j = Integer.parseInt(st.nextToken());
                 int k = Integer.parseInt(st.nextToken());
-                sum(1, 1, firstLeaf, i, j, k);
-            } else {
-                int x = Integer.parseInt(st.nextToken());
-                sb.append(search(x+firstLeaf - 1)).append("\n");
+                update(1, 1, firstLeaf, i, j, k);
+                continue;
             }
+            int x = Integer.parseInt(st.nextToken());
+            sb.append(search(x + firstLeaf - 1)).append("\n");
         }
-        System.out.print(sb);
-
+        System.out.println(sb);
     }
 
-   private static long search(int x) {
+    private static long search(int x) {
         long res = tree[x];
         while (x > 1) {
             x >>= 1;
@@ -51,19 +49,15 @@ public class Main {
         return res;
     }
 
-
-    private static void sum(int node, int l, int r, int sl, int sr, int k) {
-        if (r < sl || sr < l) {
+    private static void update(int now, int l, int r, int sl, int sr, int k) {
+        if (sr < l || r < sl) {
             return;
         }
         if (sl <= l && r <= sr) {
-            tree[node] += k;
+            tree[now] += k;
             return;
         }
-
-        sum(node * 2, l, (l + r) / 2, sl, sr, k);
-        sum(node * 2 + 1, (l + r) / 2 + 1, r, sl, sr, k);
-
-
+        update(now * 2, l, (l + r) / 2, sl, sr, k);
+        update(now * 2 + 1, (l + r) / 2 + 1, r, sl, sr, k);
     }
 }
