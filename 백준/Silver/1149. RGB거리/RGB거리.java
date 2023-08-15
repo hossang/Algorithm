@@ -2,25 +2,35 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] arg) throws IOException {
-        BufferedReader br= new BufferedReader(new InputStreamReader(System.in));
+    //백준
+    private static StringBuilder sb;
+
+
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        sb = new StringBuilder();
         StringTokenizer st;
-        int n = Integer.parseInt(br.readLine());
-        int[][] arr = new int[n][3];
-        for(int i=0;i<n;i++) {
+
+        int N = Integer.parseInt(br.readLine());
+        int[][] arr = new int[N][3];
+        for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine(), " ");
-            arr[i][0] = Integer.parseInt(st.nextToken()); //r
-            arr[i][1] = Integer.parseInt(st.nextToken()); //g
-            arr[i][2] = Integer.parseInt(st.nextToken()); //b
-
+            arr[i][0] =Integer.parseInt(st.nextToken());
+            arr[i][1] =Integer.parseInt(st.nextToken());
+            arr[i][2] =Integer.parseInt(st.nextToken());
         }
-        for (int i=1;i<n;i++) {
-            arr[i][0] += Math.min(arr[i-1][1],arr[i-1][2]);
-            arr[i][1] += Math.min(arr[i-1][0],arr[i-1][2]);
-            arr[i][2] += Math.min(arr[i-1][0],arr[i-1][1]);
 
+        int[][] dp = new int[N + 1][3];
+        dp[0][0] = arr[0][0];
+        dp[0][1] = arr[0][1];
+        dp[0][2] = arr[0][2];
+
+        for (int i = 1; i < N; i++) {
+            dp[i][0] = Math.min(dp[i - 1][1], dp[i - 1][2]) + arr[i][0];
+            dp[i][1] = Math.min(dp[i - 1][0], dp[i - 1][2]) + arr[i][1];
+            dp[i][2] = Math.min(dp[i - 1][1], dp[i - 1][0]) + arr[i][2];
         }
-        System.out.print(Math.min(Math.min(arr[n-1][0],arr[n-1][1]),arr[n-1][2]));
 
+        System.out.println(Math.min(dp[N - 1][0], Math.min(dp[N - 1][1], dp[N - 1][2])));
     }
 }
