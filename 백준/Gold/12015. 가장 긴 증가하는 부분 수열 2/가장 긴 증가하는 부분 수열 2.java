@@ -23,22 +23,25 @@ public class Main {
                 lis[idx++] = A[i];
                 continue;
             }
+            //r 을 N으로 잡으면 안되네 why? -> lis배열의 빈곳은 0으로 되어 있음 
             binarySearch(A[i], lis, idx);
         }
         System.out.println(idx);
 
     }
 
-    private static void binarySearch(int i, int[] arr, int r) {
-        int l = 0;
-        while (l < r) {
-            int mid = l + (r - l) / 2;
-            if (arr[mid] < i) {
-                l = mid + 1;
+    private static void binarySearch(int key, int[] arr, int r) {
+        int l = -1;
+        int mid;
+        while (l + 1 < r) {
+            mid = l + (r - l) / 2;
+            
+            if(arr[mid]<key) {
+                l = mid;
             } else {
                 r = mid;
             }
         }
-        arr[l] = i;
+        arr[r] = key;
     }
 }
