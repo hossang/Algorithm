@@ -1,68 +1,68 @@
-import java.util.*;
 import java.io.*;
-import java.math.*;
+import java.util.*;
 
-public class Main{
-    private static final int INF = 123456789;
-    static class Edge implements Comparable<Edge> {
-        int v;
-        int w;
+class VE {
+    int v;
+    int e;
 
-        public Edge(int v, int w) {
-            this.v = v;
-            this.w = w;
-        }
-
-        @Override
-        public int compareTo(Edge o) {
-            return this.w - o.w;
-        }
+    public VE(int v, int e) {
+        this.v = v;
+        this.e = e;
     }
-    public static void main(String[] args) throws Exception {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int v = Integer.parseInt(st.nextToken());
-        int e = Integer.parseInt(st.nextToken());
-        int start = Integer.parseInt(br.readLine());
-        ArrayList<ArrayList<Edge>> ass = new ArrayList<>();
-        for (int i = 0; i <= v; i++) {
-            ass.add(new ArrayList<>());
-        }
-        int[] dist = new int[v + 1];
-        Arrays.fill(dist, INF);
-        for (int i = 0; i < e; i++) {
-            st = new StringTokenizer(br.readLine());
-            int a = Integer.parseInt(st.nextToken());
-            int b = Integer.parseInt(st.nextToken());
-            int w = Integer.parseInt(st.nextToken());
-            ass.get(a).add(new Edge(b, w));
-        }
-        PriorityQueue<Edge> pq = new PriorityQueue<>();
-        pq.offer(new Edge(start, 0));
-        dist[start] = 0;
-        //기본적으로 BFS꼴이네
-        while (!pq.isEmpty()) {
-            Edge edge = pq.poll();
+}
 
-            if (dist[edge.v] < edge.w) { //★ 이거 뭐임 ? -> '현재까지 최적의 가중치' < '이전노드에서 현재 v노드로 도착한 가중치' 이면 PASS , 나는 최적값을 원해
+public class Main {
+    //백준
+    private static StringBuilder sb;
+
+    private static int INF = (int) (1e9 + 7);
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        sb = new StringBuilder();
+        StringTokenizer st;
+
+        st = new StringTokenizer(br.readLine(), " ");
+        int V = Integer.parseInt(st.nextToken());
+        int E = Integer.parseInt(st.nextToken());
+        List<List<VE>> graph = new ArrayList<>();
+        int[] dist = new int[V + 1];
+        Arrays.fill(dist, INF);
+        for (int i = 0; i < V + 1; i++) {
+            graph.add(new ArrayList<>());
+        }
+        PriorityQueue<VE> pq = new PriorityQueue<>((o1, o2) -> o1.e - o2.e);
+        int start = Integer.parseInt(br.readLine());
+        pq.offer(new VE(start, 0));
+        dist[start] = 0;
+        for (int i = 0; i < E; i++) {
+            st = new StringTokenizer(br.readLine(), " ");
+            int u = Integer.parseInt(st.nextToken());
+            int v = Integer.parseInt(st.nextToken());
+            int w = Integer.parseInt(st.nextToken());
+            graph.get(u).add(new VE(v, w));
+        }
+
+
+        while (!pq.isEmpty()) {
+            VE now = pq.poll();
+
+            if (dist[now.v] < now.e) {
                 continue;
             }
-            for (int i = 0; i < ass.get(edge.v).size(); i++) {
-                Edge nextEdge = ass.get(edge.v).get(i);
-                if (dist[nextEdge.v] > edge.w + nextEdge.w) {
-                    dist[nextEdge.v] = edge.w + nextEdge.w;
-                    pq.offer(new Edge(nextEdge.v, dist[nextEdge.v]));
+
+            for (VE next : graph.get(now.v)) {
+                if (dist[next.v] > next.e + now.e) {
+                    dist[next.v] = next.e + now.e;
+                    pq.offer(new VE(next.v, dist[next.v]));
                 }
             }
         }
-        for (int i = 1; i <= v; i++) {
+        for (int i = 1; i < V + 1; i++) {
             if (dist[i] == INF) {
-                sb.append("INF");
-            } else {
-                sb.append(dist[i]);
+                sb.append("INF").append("\n");
+                continue;
             }
-            sb.append("\n");
+            sb.append(dist[i]).append("\n");
         }
         System.out.println(sb);
     }
