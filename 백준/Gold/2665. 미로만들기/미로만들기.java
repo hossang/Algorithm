@@ -38,13 +38,11 @@ public class Main {
         }
         int[] dy = {-1, 1, 0, 0};
         int[] dx = {0, 0, -1, 1};
-        boolean[][] visited = new boolean[n][n];
         int[][] dist = new int[n][n];
         for (int i = 0; i < n; i++) {
             Arrays.fill(dist[i], INF);
         }
         dist[0][0] = 0;
-        visited[0][0] = true;
 
         PriorityQueue<YX> pq = new PriorityQueue<>((o1, o2) -> o1.e - o2.e);
         pq.offer(new YX(0, 0, 0));
@@ -63,22 +61,16 @@ public class Main {
                 if (ny < 0 || nx < 0 || ny >= n || nx >= n) {
                     continue;
                 }
-                if (visited[ny][nx]) {
-                    continue;
-                }
 
+                int next;
                 if (graph[ny][nx] == 0) {
-                    if (dist[ny][nx] > dist[now.y][now.x] + 1) {
-                        dist[ny][nx] = dist[now.y][now.x] + 1;
-                        pq.offer(new YX(ny, nx, dist[ny][nx]));
-                        visited[ny][nx] = true;
-                        continue;
-                    }
+                    next = 1;
+                } else {
+                    next = 0;
                 }
-                if (dist[ny][nx] > dist[now.y][now.x]) {
-                    dist[ny][nx] = dist[now.y][now.x];
+                if (dist[ny][nx] > dist[now.y][now.x] + next) {
+                    dist[ny][nx] = dist[now.y][now.x] + next;
                     pq.offer(new YX(ny, nx, dist[ny][nx]));
-                    visited[ny][nx] = true;
                 }
             }
         }
