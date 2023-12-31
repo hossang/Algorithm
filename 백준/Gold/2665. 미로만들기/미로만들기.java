@@ -62,14 +62,17 @@ public class Main {
                     continue;
                 }
 
-                int next;
                 if (graph[ny][nx] == 0) {
-                    next = 1;
-                } else {
-                    next = 0;
+                    if (dist[ny][nx] > dist[now.y][now.x] + 1) {
+                        dist[ny][nx] = dist[now.y][now.x] + 1;
+                        pq.offer(new YX(ny, nx, dist[ny][nx]));
+                    }
+        //https://www.acmicpc.net/source/70970240 에서 vistied가 필요했던 이유가 continue의 위치가 부적절 했기 때문이다.
+                    
+                    continue;
                 }
-                if (dist[ny][nx] > dist[now.y][now.x] + next) {
-                    dist[ny][nx] = dist[now.y][now.x] + next;
+                if (dist[ny][nx] > dist[now.y][now.x]) {
+                    dist[ny][nx] = dist[now.y][now.x];
                     pq.offer(new YX(ny, nx, dist[ny][nx]));
                 }
             }
